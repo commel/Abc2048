@@ -15,7 +15,7 @@ using flixel.util.FlxSpriteUtil;
 class PlayState extends FlxState
 {
 
-  private var gameField:Array<Array<Int>> = [ [0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0] ];
+  private var game:Game;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -24,70 +24,9 @@ class PlayState extends FlxState
 	{
 		super.create();
     trace("Entered Playstate");
-
-    var btn = new FlxButton(100, 100, "Points!", clickForPoints);
-    add(btn);
-    drawState();
+    game = new Game();
 	}
 
-  private function hasWinningCondition():Bool {
-    for (row in 0...4) {
-      for (col in 0...4) {
-        if (getValue(row, col) >= 2048) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  private function getValue(x:Int, y:Int):Int {
-    return gameField[x][y];
-  }
-
-  private function setValue(x:Int, y:Int, value:Int):Void {
-    gameField[x][y] = value;
-  }
-
-  private function increment(x:Int, y:Int):Void {
-    var previousVal:Int = getValue(x,y);
-
-    setValue(x,y, getNewState(getValue(x,y)));
-  }
-
-  private function getNewState(value:Int):Int {
-    return value == 0 ? 2 : value * 2;
-  }
-
-  private function createEntity(x:Int, y:Int):Entity {
-    return new Entity( (x+1)*30, (y+1)*30, getValue(x,y) );
-  }
-
-  private function drawState():Void {
-    for (row in 0...4) {
-      for (col in 0...4) {
-        add(createEntity(row, col)); 
-      }
-    }
-  }
-
-  private function printState():Void {
-    for (row in gameField) {
-      trace('$row');
-    }
-  }
-
-  private function clickForPoints():Void {
-    increment(0,0);
-    if (hasWinningCondition()) {
-      var winnerText = new FlxText(0, 0, "GEWONNEN!");
-      add(winnerText);
-      winnerText.screenCenter();
-    }
-    printState();
-    drawState();
-  }
-  
 	/**
 	 * Function that is called when this state is destroyed - you might want to 
 	 * consider setting all objects this state uses to null to help garbage collection.
@@ -95,7 +34,7 @@ class PlayState extends FlxState
 	override public function destroy():Void
 	{
 		super.destroy();
-    gameField = null;
+    game = null;
 	}
 
 	/**
@@ -104,5 +43,29 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
+
+    if (FlxG.keys.justPressed.F1) {
+      game.printCurrentState();
+    }
+
+    if (FlxG.keys.justPressed.F2) {
+      game.randomize();
+    }
+
+    if (FlxG.keys.justPressed.LEFT) {
+      game.shiftLeft();
+    }
+
+    if (FlxG.keys.justPressed.RIGHT) {
+      game.shiftRight();
+    }
+
+    if (FlxG.keys.justPressed.UP) {
+      game.shiftUp();
+    }
+
+    if (FlxG.keys.justPressed.DOWN) {
+      game.shiftDown();
+    }
 	}	
 }
