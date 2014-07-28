@@ -29,57 +29,60 @@ class Game {
     initialized = true;
   }
 
-  private function shiftLeft(x:Int, y:Int, value:Int):Void {
-    // sind wir schon am rand?
-    if (x < 0) {
-      return;
-    }
+  public function shift(line:Array<Int>):Array<Int> {
+    for (i in 0...3) {
+      trace('item: $line mit $i');
+      // sind wir leer? dann weiter
+      if (line[i] == 0) {
+        continue;
+        trace("Leer dann weiter");
+      } else {
+        // wir sind nicht leer
+        trace("nicht leer");
 
-    // ist das feld bereits gefüllt?
-    if (gameField[x][y] != 0) {
-      // ist es derselbe wert wie unserer?
-      if (gameField[x][y] == value) {
-        
+        // ist der nächste leer?
+        if (line[i+1] == 0) {
+          trace("nächster ist leer");
+          // wert löschen und in den nächsten eintragen
+          line[i+1] = line[i];
+          line[i] = 0;
+        } else {
+          // ist der nächste dasselbe wie wir?
+          trace("Nächster ist nicht leer");
+          if (line[i] == line[i+1]) {
+            // zusammenführen
+            line[i+1] = line[i] * 2;
+            line[i] = 0;
+          } else {
+            trace("ist unterschiedlich, dann ende");
+            // hier ist dann schluss
+            continue;
+          }
+        }
       }
     }
 
-    shiftLeft(x-1, y, value);
+    trace('line2: $line');
+    return line;
   }
 
   public function shiftLeft():Void {
-    trace("left");
-    for(row in 0...4) {
-      for(col in 0...4) {
-        // Ganz links gehts nicht weiter
-        if (col == 0) {
-          continue;
-        }
-
-        // Leere Felder garnicht beachten
-        if (gameField[row][col] == 0) {
-          continue;
-        }
-
-        // Wert des Nachbarn ermitteln
-        var neighbor = gameField[row][col-1];
-
-        
-        // Wert um eins nach links verschieben 
-
-      }
+    trace("shift left");
+    for (row in gameField) {
+      shift(row);
     }
   }
 
   public function shiftRight():Void {
-    trace("right");
+    trace("shift right");
   }
 
   public function shiftUp():Void {
-    trace("up");
+    trace("shift up");
   }
 
   public function shiftDown():Void {
-    trace("down");
+    trace("shift down");
   }
 
 }

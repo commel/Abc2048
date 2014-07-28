@@ -1,0 +1,3 @@
+-cp source/
+-neko test.n
+-main GameTest
