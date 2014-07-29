@@ -1,3 +1,4 @@
 -cp source/
--neko test.n
+-cp test/
+-neko export/test.n
 -main GameTest

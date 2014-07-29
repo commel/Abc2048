@@ -14,9 +14,13 @@ class Game {
   }
 
   public function printCurrentState():Void {
+    trace('field start');
+
     for (row in gameField) {
       trace('$row');
     }
+
+    trace('field end');
   }
 
   public function randomize():Void {
