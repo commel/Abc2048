@@ -6,28 +6,19 @@ class GameTest extends haxe.unit.TestCase {
     g = new Game();
   }
 
-  public function testGame1():Void {
-    assertArrayEquals([0,0,0,0], g.shift([0,0,0,0]));
+  public function testShiftEmpty():Void {
+    assertEquals(Std.string([0,0,0,0]), Std.string(g.shift([0,0,0,0])));
   }
 
   public function testShiftSingleValue():Void {
-   assertArrayEquals([0,0,0,2], g.shift([2,0,0,0]));
-   assertArrayEquals([0,0,0,2], g.shift([0,2,0,0]));
-   assertArrayEquals([0,0,0,2], g.shift([0,0,2,0]));
-   assertArrayEquals([0,0,0,2], g.shift([0,0,0,2]));
+   assertEquals(Std.string([0,0,0,2]), Std.string(g.shift([2,0,0,0])));
+   assertEquals(Std.string([0,0,0,2]), Std.string(g.shift([0,2,0,0])));
+   assertEquals(Std.string([0,0,0,2]), Std.string(g.shift([0,0,2,0])));
+   assertEquals(Std.string([0,0,0,2]), Std.string(g.shift([0,0,0,2])));
   }
 
-  public function testShiftSingleValueWithOther():Void {
-   assertArrayEquals([0,0,2,4], g.shift([2,0,4,0]));
-   assertArrayEquals([0,0,2,4], g.shift([0,2,4,0]));
-   assertArrayEquals([0,0,2,4], g.shift([0,0,2,4]));
-  }
-
-  private function assertArrayEquals(a: Array<Int>, b: Array<Int>):Void {
-    assertEquals(a.length, b.length);
-    for (i in 0...a.length) {
-      assertEquals(a[i], b[i]);
-    }
+  public function testShiftMerge():Void {
+    assertEquals(Std.string([0,2,2,4]), Std.string(g.shift([2,2,2,2])));
   }
 
   static function main():Void {

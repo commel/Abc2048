@@ -33,42 +33,30 @@ class Game {
     initialized = true;
   }
 
-  public function shift(line:Array<Int>):Array<Int> {
-    for (i in 0...3) {
-      trace('item: $line mit $i');
-      // sind wir leer? dann weiter
-      if (line[i] == 0) {
-        continue;
-        trace("Leer dann weiter");
-      } else {
-        // wir sind nicht leer
-        trace("nicht leer");
+  public function shift(line:Array<Int>):Array<Int> { 
+    var l = cleanLine(line);
 
-        // ist der nächste leer?
-        if (line[i+1] == 0) {
-          trace("nächster ist leer");
-          // wert löschen und in den nächsten eintragen
-          line[i+1] = line[i];
-          line[i] = 0;
-        } else {
-          // ist der nächste dasselbe wie wir?
-          trace("Nächster ist nicht leer");
-          if (line[i] == line[i+1]) {
-            // zusammenführen
-            line[i+1] = line[i] * 2;
-            line[i] = 0;
-          } else {
-            trace("ist unterschiedlich, dann ende");
-            // hier ist dann schluss
-            continue;
-          }
-        }
-      }
+
+    
+
+    return l;
+  }
+
+  private function cleanLine(line:Array<Int>):Array<Int> {
+     var lst = line.filter(function(v) { return v != 0; });
+
+    // Array links mit nullen auffüllen
+    while (lst.length != 4) {
+      lst.push(0);
     }
 
-    trace('line2: $line');
-    return line;
+    // umdrehen
+    lst.reverse();
+
+    return lst;
   }
+
+
 
   public function shiftLeft():Void {
     trace("shift left");
