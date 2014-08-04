@@ -23,8 +23,8 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-    trace("Entered Playstate");
-    game = new Game();
+        trace("Entered Playstate");
+        game = new Game();
 	}
 
 	/**
@@ -34,7 +34,7 @@ class PlayState extends FlxState
 	override public function destroy():Void
 	{
 		super.destroy();
-    game = null;
+        game = null;
 	}
 
 	/**
@@ -44,28 +44,35 @@ class PlayState extends FlxState
 	{
 		super.update();
 
-    if (FlxG.keys.justPressed.F1) {
-      game.printCurrentState();
-    }
+        if (game.hasLost()) {
+            trace("You've lost!");
+            Sys.exit(0);
+        }
 
-    if (FlxG.keys.justPressed.F2) {
-      game.randomize();
-    }
+        if (FlxG.keys.justPressed.F1) {
+            game.printCurrentState();
+        }
 
-    if (FlxG.keys.justPressed.LEFT) {
-      game.shiftLeft();
-    }
+        if (FlxG.keys.justPressed.F2) {
+            game.randomize();
+        }
 
-    if (FlxG.keys.justPressed.RIGHT) {
-      game.shiftRight();
-    }
+        if (FlxG.keys.justPressed.LEFT) {
+            game.shiftLeft();
+        }
 
-    if (FlxG.keys.justPressed.UP) {
-      game.shiftUp();
-    }
+        if (FlxG.keys.justPressed.RIGHT) {
+            game.shiftRight();
+        }
 
-    if (FlxG.keys.justPressed.DOWN) {
-      game.shiftDown();
-    }
-	}	
+        if (FlxG.keys.justPressed.UP) {
+            game.shiftUp();
+        }
+
+        if (FlxG.keys.justPressed.DOWN) {
+            game.shiftDown();
+        }
+	}
+
+
 }

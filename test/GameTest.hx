@@ -18,8 +18,12 @@ class GameTest extends haxe.unit.TestCase {
   }
 
   public function testShiftMerge():Void {
-    assertEquals(Std.string([0,2,2,4]), Std.string(g.shift([2,2,2,2])));
+    assertEquals(Std.string([0,0,4,4]), Std.string(g.shift([2,2,2,2])));
   }
+
+    public function testShiftMerge2():Void {
+        assertEquals(Std.string([0,0,0,8]), Std.string(g.shift([0,0,4,4])));
+    }
 
   static function main():Void {
     var runner = new haxe.unit.TestRunner();
