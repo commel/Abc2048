@@ -66,12 +66,14 @@ class Game {
 
     var n = new Array<Int>();
 
+    var mergedVals = new Map<Int, Bool>();
     for(i in 0...4) {
         if (i == 4) {
             n.push(i);
             continue;
         }
-        if (l[i] == l[i+1]) {
+        if (l[i] == l[i+1] && !mergedVals.exists(l[i] * 2)) {
+            mergedVals.set(l[i] * 2, true);
             n.push(l[i] * 2);
             l[i] = 0;
             l[i+1] = 0;
@@ -100,8 +102,10 @@ class Game {
   public function shiftLeft():Void {
     trace("shift left");
     for (i in 0...4) {
-        var res = shift(gameField[i]);
-        res.reverse(); // modify to return to unnormalized state
+        var line = gameField[i];
+        line.reverse();
+        var res = shift(line);
+        res.reverse();
         gameField[i] = res;
     }
     addNewEntity();
@@ -117,21 +121,36 @@ class Game {
 
   public function shiftUp():Void {
     trace("shift up");
+   
+    for (row in 0...4) {
+      // normalise row
+      var c = [ gameField[3][row], gameField[2][row], gameField[1][row], gameField[0][row] ];
+      var res = shift(c);
 
-    for (c in 0...4) {
-        var col:Array<Int>(4);
-        for(row in 0...4) {
-            col.push(gameField[row][c]);
-        }
+      gameField[0][row] = res[3];
+      gameField[1][row] = res[2];
+      gameField[2][row] = res[1];
+      gameField[3][row] = res[0];
     }
-
-    shift(col);
-
+    
     addNewEntity();
   }
 
   public function shiftDown():Void {
     trace("shift down");
+
+    for (row in 0...4) {
+      var c = [ gameField[0][row], gameField[1][row], gameField[2][row], gameField[3][row] ];
+      trace("column        : " + c);
+      var res = shift(c);
+      trace("shifted column: " + res);
+
+      gameField[0][row] = res[0];
+      gameField[1][row] = res[1];
+      gameField[2][row] = res[2];
+      gameField[3][row] = res[3];
+    }
+
     addNewEntity();
   }
 
