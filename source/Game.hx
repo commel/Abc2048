@@ -15,11 +15,10 @@ class Game {
         var x = Std.random(4);
         var y = Std.random(4);
 
-        trace('Random Field x=$x,y=$y');
-
         if (gameField[x][y] == 0) {
             gameField[x][y] = 2;
             valueSet = true;
+            trace('New Random value set to $x/$y');
         }
     }
   }
@@ -35,6 +34,17 @@ class Game {
     }
 
     return zerosLeft == 0; // No zeros left, you have lost
+  }
+
+  public function hasWon():Bool {
+    for (row in gameField) {
+      for (i in 0...4) {
+        if (row[i] == 2048) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   public function getCurrentState():Array<Array<Int>> {
