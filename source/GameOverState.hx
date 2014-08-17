@@ -13,38 +13,44 @@ using flixel.util.FlxSpriteUtil;
 /**
  * A FlxState which can be used for the game's menu.
  */
-class MenuState extends FlxState
+class GameOverState extends FlxState
 {
+
+  private var score:Int;
+
+  public function new(score:Int):Void {
+    super();
+    this.score = score;
+  }
+
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
-    trace("created Menustate");
+    trace("created GameOverState");
 		super.create();
 
-    var title = new FlxText(100, 100, 200, "Haxe2048");
-    title.alignment = "center";
-    title.size = 20;
-    add(title);
+    var go = new FlxText(20, 0, 0, "Game Over");
+    go.alignment = "center";
+    go.screenCenter(false, true);
+    go.size = 20;
+    add(go);
 
-    var startButton = new FlxButton(0, 0, "Start", startClicked);
-    add(startButton);
-    startButton.screenCenter();
+    var text = new FlxText(20, 0, 0, "You've lost!\nYour Score was " + Std.string(score) + ".");
+    text.alignment = "center";
+    text.screenCenter(true, false);
 
-    var quitButton = new FlxButton(0, 0, "Quit", quitClicked);
-    add(quitButton);
+    var btnBack = new FlxButton(0, 0, "Back", backToMenuClicked);
+    add(btnBack);
+
+    add(text);
 	}
 
-  private function startClicked():Void {
-    trace("start clicked");
-    FlxG.switchState(new PlayState());
+  private function backToMenuClicked():Void {
+    FlxG.switchState(new MenuState());
   }
 
-  private function quitClicked():Void {
-    Sys.exit(0);
-  }
-	
 	/**
 	 * Function that is called when this state is destroyed - you might want to 
 	 * consider setting all objects this state uses to null to help garbage collection.

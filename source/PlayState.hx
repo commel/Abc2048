@@ -81,11 +81,8 @@ class PlayState extends FlxState
 		super.update();
 
     if (game.hasLost()) {
-      trace("You've lost!");
-      var lostTxt = new FlxText(20, 0, 0, "Game Over\nYour Score was " + game.getCurrentScore() + ".");
-      lostTxt.alignment = "center";
-      lostTxt.screenCenter(true, false);
-      add(lostTxt);
+      var gos = new GameOverState(game.getCurrentScore());
+      FlxG.switchState(gos);
       return;
     }
 
