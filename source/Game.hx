@@ -5,10 +5,14 @@ class Game {
                                               [0,0,0,0],
                                               [0,0,0,0]  ];
 
+  private var score:Int = 0;
+
   private var initialized:Bool = false;
 
+  // Constructor
   public function new():Void { }
 
+  // Adds a new entry
   private function addNewEntity():Void {
     var valueSet = false;
     while (!valueSet) {
@@ -23,6 +27,7 @@ class Game {
     }
   }
 
+  // evaluates if game is lost
   public function hasLost():Bool {
     var zerosLeft:Int = 0;
     for (row in gameField) {
@@ -36,6 +41,7 @@ class Game {
     return zerosLeft == 0; // No zeros left, you have lost
   }
 
+  // evalualtes if game is won
   public function hasWon():Bool {
     for (row in gameField) {
       for (i in 0...4) {
@@ -47,6 +53,7 @@ class Game {
     return false;
   }
 
+  // returns the current state
   public function getCurrentState():Array<Array<Int>> {
     return gameField;
   }
@@ -61,6 +68,7 @@ class Game {
     trace('field end');
   }
 
+  // sets the randomized start setting
   public function randomize():Void {
     if (initialized) { return; }
 
@@ -71,6 +79,17 @@ class Game {
     initialized = true;
   }
 
+  // adds a joined field value to the score
+  private function addToScore(joinedFieldValue:Int):Void {
+    score += joinedFieldValue * 2;
+  }
+
+  // returns the current score
+  public function getCurrentScore():Int {
+    return score;
+  }
+
+  // shifts the normalized line
   public function shift(line:Array<Int>):Array<Int> {
     var l = cleanLine(line);
 
@@ -85,6 +104,7 @@ class Game {
         if (l[i] == l[i+1] && !mergedVals.exists(l[i] * 2)) {
             mergedVals.set(l[i] * 2, true);
             n.push(l[i] * 2);
+            addToScore(l[i]);
             l[i] = 0;
             l[i+1] = 0;
             continue;
@@ -95,6 +115,7 @@ class Game {
     return cleanLine(n);
   }
 
+  // cleans a line from any zeros and fills up left with zeros
   private function cleanLine(line:Array<Int>):Array<Int> {
      var lst = line.filter(function(v) { return v != 0; });
 
@@ -109,6 +130,7 @@ class Game {
     return lst;
   }
 
+  // action on left
   public function shiftLeft():Void {
     trace("shift left");
     for (i in 0...4) {
@@ -121,6 +143,7 @@ class Game {
     addNewEntity();
   }
 
+  // action on right
   public function shiftRight():Void {
     trace("shift right");
     for (i in 0...4) {
@@ -129,6 +152,7 @@ class Game {
     addNewEntity();
   }
 
+  // action on up
   public function shiftUp():Void {
     trace("shift up");
    
@@ -146,6 +170,7 @@ class Game {
     addNewEntity();
   }
 
+  // action on down
   public function shiftDown():Void {
     trace("shift down");
 

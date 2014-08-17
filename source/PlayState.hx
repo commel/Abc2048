@@ -17,6 +17,8 @@ class PlayState extends FlxState
 {
 
   private var game:Game;
+  private var scoreLabel:FlxText;
+  private var scoreValue:FlxText;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -26,7 +28,14 @@ class PlayState extends FlxState
 		super.create();
         trace("Entered Playstate");
         game = new Game();
-        drawGameField();
+
+        scoreLabel = new FlxText(20, 400, 150, "Score:");
+        scoreValue = new FlxText(60, 400, 150, "0");
+
+        add(scoreLabel);
+        add(scoreValue);
+        repaint();
+
 	}
 
 	/**
@@ -37,8 +46,21 @@ class PlayState extends FlxState
 	{
 		super.destroy();
         game = null;
+        scoreLabel = null;
+        scoreValue = null;
 	}
+  
+  private function repaint():Void {
+    drawGameField();
+    updateScore();
+  }
 
+  // updates the score
+  private function updateScore():Void {
+    scoreValue.text = Std.string(game.getCurrentScore());
+  }
+
+  // Updates the game field
   private function drawGameField():Void {
     var gf = game.getCurrentState();
     for (row in 0...4) {
@@ -60,7 +82,7 @@ class PlayState extends FlxState
 
     if (game.hasLost()) {
       trace("You've lost!");
-      var lostTxt = new FlxText(20, 0, 0, "Game Over");
+      var lostTxt = new FlxText(20, 0, 0, "Game Over\nYour Score was " + game.getCurrentScore() + ".");
       lostTxt.alignment = "center";
       lostTxt.screenCenter(true, false);
       add(lostTxt);
@@ -82,27 +104,27 @@ class PlayState extends FlxState
 
     if (FlxG.keys.justPressed.F2) {
       game.randomize();
-      drawGameField();
+      repaint();
     }
 
     if (FlxG.keys.justPressed.LEFT) {
       game.shiftLeft();
-      drawGameField();
+      repaint();
     }
 
     if (FlxG.keys.justPressed.RIGHT) {
       game.shiftRight();
-      drawGameField();
+      repaint();
     }
 
     if (FlxG.keys.justPressed.UP) {
       game.shiftUp();
-      drawGameField();
+      repaint();
     }
 
     if (FlxG.keys.justPressed.DOWN) {
       game.shiftDown();
-      drawGameField();
+      repaint();
     }
 	}
 
