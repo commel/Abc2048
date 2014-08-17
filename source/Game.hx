@@ -12,6 +12,10 @@ class Game {
   // Constructor
   public function new():Void { }
 
+  public function start():Void {
+    randomize();
+  }
+
   // Adds a new entry
   private function addNewEntity():Void {
     var valueSet = false;

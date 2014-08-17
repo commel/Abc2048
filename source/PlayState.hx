@@ -28,6 +28,7 @@ class PlayState extends FlxState
 		super.create();
         trace("Entered Playstate");
         game = new Game();
+        game.start();
 
         scoreLabel = new FlxText(20, 400, 150, "Score:");
         scoreValue = new FlxText(60, 400, 150, "0");
@@ -46,7 +47,9 @@ class PlayState extends FlxState
 	{
 		super.destroy();
         game = null;
+        scoreLabel.destroy();
         scoreLabel = null;
+        scoreValue.destroy();
         scoreValue = null;
 	}
   
@@ -87,11 +90,8 @@ class PlayState extends FlxState
     }
 
     if (game.hasWon()) {
-      trace("You've won!");
-      var winTxt = new FlxText(20, 0, 0, "You've won - congratulations!");
-      winTxt.alignment = "center";
-      winTxt.screenCenter(true, false);
-      add(winTxt);
+      var gos = new GameWonState(game.getCurrentScore());
+      FlxG.switchState(gos);
       return;
     }
 
