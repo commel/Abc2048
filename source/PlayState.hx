@@ -46,8 +46,8 @@ class PlayState extends FlxState
 	override public function destroy():Void
 	{
 		super.destroy();
-        game = null;
-        scoreLabel.destroy();
+	    game = null;
+	  scoreLabel.destroy();
         scoreLabel = null;
         scoreValue.destroy();
         scoreValue = null;

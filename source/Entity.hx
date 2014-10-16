@@ -8,8 +8,11 @@ class Entity extends FlxSprite {
   
   public function new(x:Int=0, y:Int=0, value:Int=0) {
     super(x,y);
-    makeGraphic(50, 50, FlxColor.RED);
-    alpha = value / 2048;
+    if (value > 0) {
+      loadGraphic("assets/images/" + value + ".png");
+    } else {
+      makeGraphic(32, 32, FlxColor.GRAY);
+    }
   }
 
 }
