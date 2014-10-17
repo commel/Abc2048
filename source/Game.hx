@@ -16,15 +16,22 @@ class Game {
     randomize();
   }
 
+  public function instaWin() {
+    var x = Std.random(4);
+    var y = Std.random(4);
+
+    gameField[x][y] = 2048;
+  }
+
   // Adds a new entry
-  private function addNewEntity():Void {
+  private function addNewEntity() {
     var valueSet = false;
     while (!valueSet) {
         var x = Std.random(4);
         var y = Std.random(4);
 
         if (gameField[x][y] == 0) {
-            gameField[x][y] = 2;
+            gameField[x][y] = 2; 
             valueSet = true;
             trace('New Random value set to $x/$y');
         }

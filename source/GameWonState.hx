@@ -31,7 +31,7 @@ class GameWonState extends FlxState
     trace("created GameWonState");
 		super.create();
 
-    var go = new FlxText(20, 0, 0, "Game Over");
+    var go = new FlxText(20, 0, 0, "You are a WINNER");
     go.alignment = "center";
     go.screenCenter(false, true);
     go.size = 20;

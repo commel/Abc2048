@@ -123,6 +123,11 @@ class PlayState extends FlxState
       game.shiftDown();
       repaint();
     }
+
+    if (FlxG.keys.justPressed.F9) {
+      game.instaWin();
+      repaint();
+    }
 	}
 
 }
