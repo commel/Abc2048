@@ -9,6 +9,7 @@ import flixel.util.FlxMath;
 
 import flixel.ui.FlxButton;
 using flixel.util.FlxSpriteUtil;
+using FlxSpriteExtender;
 
 /**
  * A FlxState which can be used for the game's menu.
@@ -23,16 +24,17 @@ class MenuState extends FlxState
     trace("created Menustate");
 		super.create();
 
-    var title = new FlxText(100, 100, 200, "Haxe2048");
-    title.alignment = "center";
-    title.size = 20;
+    var title = new FlxText(0, 30, 0, "Haxe2048", 36);
+    title.h_center();
+
     add(title);
 
-    var startButton = new FlxButton(0, 0, "Start", startClicked);
+    var startButton = new FlxButton(0, 100, "Start", startClicked);
+    startButton.h_center();
     add(startButton);
-    startButton.screenCenter();
 
-    var quitButton = new FlxButton(0, 0, "Quit", quitClicked);
+    var quitButton = new FlxButton(0, 140, "Quit", quitClicked);
+    quitButton.h_center();
     add(quitButton);
 	}
 
